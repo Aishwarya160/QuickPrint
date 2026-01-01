@@ -2,49 +2,8 @@
 
 {% block content %}
 
-<!-- Main background -->
-<div
-  style="
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      #e9f2ff 0%,
-      #f6f9ff 45%,
-      #ffffff 100%
-    );
-    z-index: -3;
-  "
-></div>
-
-<!-- Subtle blue print glow -->
-<div
-  style="
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(
-        circle at top right,
-        rgba(13,110,253,0.18),
-        transparent 55%
-      ),
-      radial-gradient(
-        circle at bottom left,
-        rgba(13,110,253,0.12),
-        transparent 60%
-      );
-    z-index: -2;
-  "
-></div>
-
-<!-- Login card -->
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="glass-card animate-fade-in-up"
-         style="
-           width: 100%;
-           max-width: 420px;
-           box-shadow: 0 25px 50px rgba(13,110,253,0.18);
-         ">
+    <div class="glass-card" style="width: 100%; max-width: 420px;">
 
         <h3 class="text-center mb-4">
             <i class="bi bi-person-fill text-primary"></i> Student Login
@@ -52,15 +11,26 @@
 
         <form method="POST" action="{{ url_for('login') }}">
             <div class="mb-3">
-                <label for="usn" class="form-label">USN</label>
-                <input type="text" class="form-control" id="usn" name="usn"
-                       placeholder="Enter your USN" required>
+                <label class="form-label">USN</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="user_id"
+                    placeholder="Enter your USN"
+                    required
+                    autocomplete="off"
+                    autocapitalize="characters"
+                    spellcheck="false">
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password"
-                       placeholder=" " name="password" required>
+                <label class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    required
+                    autocomplete="off">
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mt-2">
@@ -69,14 +39,15 @@
         </form>
 
         <p class="text-center text-muted small mt-3">
-            📄 Secure access for submitting print requests
+            Secure access for submitting print requests
         </p>
 
         <div class="text-center mt-2">
             <a href="{{ url_for('home') }}" class="text-decoration-none text-muted">
-                <i class="bi bi-arrow-left-circle"></i> Back to Home
+                Back to Home
             </a>
         </div>
+
     </div>
 </div>
 

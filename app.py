@@ -151,36 +151,70 @@ def uploaded_file(filename):
 
 
 
+import re
+
+def normalize_input(value):
+    if not value:
+        return ""
+    value = re.sub(r'\s+', '', value)  # remove all whitespace
+    return value.upper()
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        usn = request.form["user_id"].strip().upper()
-        password = request.form["password"].strip()
+        usn = normalize_input(request.form.get("user_id", ""))
+        password = request.form.get("password", "").strip()
 
-        user = User.query.filter_by(usn=usn, role='student').first()
+        # 🔹 Prevent empty submission (important)
+        if not usn or not password:
+            flash("Please enter all fields")
+            return render_template("login.html")
+
+        user = User.query.filter_by(usn=usn, role="student").first()
+
         if user and user.password == password:
+            session.clear()
             session["user_id"] = user.id
             session["role"] = user.role
             flash("Login successful")
             return redirect(url_for("dashboard"))
+
         flash("Invalid credentials")
+
     return render_template("login.html")
+
+import re
+
+def normalize_input(value):
+    if not value:
+        return ""
+    value = re.sub(r'\s+', '', value)
+    return value.upper()
 
 
 @app.route("/staff_login", methods=["GET", "POST"])
 def staff_login():
     if request.method == "POST":
-        user_id = request.form["user_id"].strip().upper()
-        password = request.form["password"].strip()
+        user_id = normalize_input(request.form.get("user_id", ""))
+        password = request.form.get("password", "").strip()
 
-        if user_id == "staff1" and password == "aiml":
-            session["user_id"] = 1
+        # Safety check
+        if not user_id or not password:
+            flash("Please enter all fields")
+            return render_template("staff_login.html")
+
+        # 🔹 Staff credentials (static)
+        if user_id == "STAFF1" and password == "aiml":
+            session.clear()
+            session["user_id"] = "staff1"
             session["role"] = "staff"
             flash("Login successful")
             return redirect(url_for("staff_panel"))
 
         flash("Invalid credentials")
+
     return render_template("staff_login.html")
+
 
 
 @app.route("/logout")
