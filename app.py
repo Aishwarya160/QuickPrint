@@ -6,8 +6,10 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PyPDF2 import PdfReader
 from flask import abort
+from werkzeug.exceptions import BadRequest
 from datetime import datetime
 from datetime import timedelta
+
 
 
 def utc_to_ist(dt):
@@ -159,13 +161,21 @@ def normalize_input(value):
     value = re.sub(r'\s+', '', value)  # remove all whitespace
     return value.upper()
 
+from flask import request, render_template, redirect, url_for, session, flash
+import re
+
+def normalize_input(val):
+    if not val:
+        return ""
+    return re.sub(r"\s+", "", val).upper()
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        # 🔹 SAFE reads (NEVER cause 400)
         usn = normalize_input(request.form.get("user_id", ""))
         password = request.form.get("password", "").strip()
 
-        # 🔹 Prevent empty submission (important)
         if not usn or not password:
             flash("Please enter all fields")
             return render_template("login.html")
@@ -175,13 +185,14 @@ def login():
         if user and user.password == password:
             session.clear()
             session["user_id"] = user.id
-            session["role"] = user.role
+            session["role"] = "student"
             flash("Login successful")
             return redirect(url_for("dashboard"))
 
         flash("Invalid credentials")
 
     return render_template("login.html")
+
 
 import re
 
@@ -191,19 +202,16 @@ def normalize_input(value):
     value = re.sub(r'\s+', '', value)
     return value.upper()
 
-
 @app.route("/staff_login", methods=["GET", "POST"])
 def staff_login():
     if request.method == "POST":
         user_id = normalize_input(request.form.get("user_id", ""))
         password = request.form.get("password", "").strip()
 
-        # Safety check
         if not user_id or not password:
             flash("Please enter all fields")
             return render_template("staff_login.html")
 
-        # 🔹 Staff credentials (static)
         if user_id == "STAFF1" and password == "aiml":
             session.clear()
             session["user_id"] = "staff1"
@@ -214,6 +222,7 @@ def staff_login():
         flash("Invalid credentials")
 
     return render_template("staff_login.html")
+
 
 
 
@@ -457,7 +466,9 @@ def upload_payment_proof(req_id):
     return render_template("upload_payment_proof.html", req=req, upi_link=upi_link)
     
 
-
+@app.errorhandler(BadRequest)
+def handle_bad_request(e):
+    return render_template("error_400.html"), 400
 
 
 if __name__ == "__main__":
