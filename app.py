@@ -23,7 +23,7 @@ def utc_to_ist(dt):
 app = Flask(__name__)
 app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=True
+    SESSION_COOKIE_SECURE=True,
     SESSION_COOKIE_HTTPONLY=True
 )
 
