@@ -6,16 +6,17 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PyPDF2 import PdfReader
 from flask import abort
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest 
 from datetime import datetime
 from datetime import timedelta
 
-
+from werkzeug.exceptions import traceback
 
 def utc_to_ist(dt):
     if dt is None:
         return None
     return dt + timedelta(hours=5, minutes=30)
+
 
 
 
@@ -137,6 +138,13 @@ def parse_pages_input(pages_input, file_path=None):
 
 
 # ------------ ROUTES ------------
+
+@app.errorhandler(BadRequest)
+def handle_bad_request(e):
+    print("🔥 BAD REQUEST TRACEBACK 🔥")
+    traceback.print_exc()
+    return "Bad Request – check Render logs", 400
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -466,9 +474,7 @@ def upload_payment_proof(req_id):
     return render_template("upload_payment_proof.html", req=req, upi_link=upi_link)
     
 
-@app.errorhandler(BadRequest)
-def handle_bad_request(e):
-    return render_template("error_400.html"), 400
+
 
 
 if __name__ == "__main__":
