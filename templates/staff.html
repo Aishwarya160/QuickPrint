@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-printer"></i> Staff Panel - Print Requests</h2>
+
+<div class="glass-card p-3">
+<div class="table-responsive">
+<table class="table table-hover align-middle table-fixed">
+    <thead>
+        <tr>
+            <th style="width:6%">ID</th>
+            <th style="width:14%">Student</th>
+            <th style="width:10%">Date</th>
+            <th style="width:14%">File</th>
+            <th style="width:22%">Specs</th>
+            <th style="width:12%">Payment</th>
+            <th style="width:12%">Print</th>
+            <th style="width:10%">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for req in requests %}
+        <tr>
+            <td>#{{ req.id }}</td>
+
+            <td>{{ req.user.usn }}</td>
+
+            <!-- ✅ DATE COLUMN (FIXED) -->
+            <td>
+                {% if req.created_at %}
+                    <span class="badge
+                        {% if req.date_label == 'Today' %}
+                            text-bg-success
+                        {% elif req.date_label == 'Yesterday' %}
+                            text-bg-warning
+                        {% else %}
+                            text-bg-secondary
+                        {% endif %}
+                    ">
+                        {{ req.date_label }}
+                    </span>
+                    <br>
+                    <small class="text-muted">
+                        {{ req.created_at.strftime('%I:%M %p') }}
+                    </small>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+
+            <!-- FILE -->
+            <td>
+                <a href="{{ url_for('uploaded_file', filename=req.filename) }}"
+                   class="btn btn-primary btn-sm"
+                   target="_blank">
+                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                    {{ req.filename | truncate(15) }}
+                </a>
+            </td>
+
+            <!-- SPECS -->
+            <td class="text-start">
+                <ul class="list-unstyled mb-0 small">
+                    <li><strong>Size:</strong> {{ req.paper_size }}</li>
+                    <li><strong>Orientation:</strong> {{ req.orientation }}</li>
+                    <li><strong>Color:</strong> {{ req.color_mode }}</li>
+                    <li><strong>Finishing:</strong> {{ req.finishing }}</li>
+                    <li><strong>Pages:</strong> {{ req.pages }}</li>
+                    <li><strong>Copies:</strong> {{ req.copies }}</li>
+                    <li><strong>Cost:</strong> ₹{{ req.cost }}</li>
+                </ul>
+            </td>
+
+            <!-- PAYMENT -->
+            <td class="text-center">
+                {% if req.payment_proof %}
+                    <span class="badge text-bg-success mb-1">
+                        <i class="bi bi-check2-circle"></i> Paid
+                    </span>
+                    <br>
+                    <a href="{{ url_for('uploaded_file', filename=req.payment_proof) }}"
+                       target="_blank">
+                        <img src="{{ url_for('uploaded_file', filename=req.payment_proof) }}"
+                             class="img-thumbnail"
+                             style="max-height:60px;">
+                    </a>
+                {% else %}
+                    <span class="badge text-bg-warning">
+                        <i class="bi bi-exclamation-circle"></i> Not Paid
+                    </span>
+                {% endif %}
+            </td>
+
+            <!-- PRINT -->
+            <td class="text-center">
+                {% if req.status == 'Pending' %}
+                    <a href="{{ url_for('trigger_print', req_id=req.id) }}"
+                       class="btn btn-success btn-sm w-100"
+                       target="_blank">
+                        <i class="bi bi-printer-fill"></i> Print
+                    </a>
+                {% else %}
+                    <span class="badge text-bg-success">
+                        <i class="bi bi-check-circle-fill"></i> Completed
+                    </span>
+                {% endif %}
+            </td>
+
+            <!-- ACTION -->
+            <td class="text-center">
+                <form method="POST"
+                      action="{{ url_for('delete_request_staff', req_id=req.id) }}">
+                    <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            title="Delete Request">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

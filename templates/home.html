@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Fullscreen background -->
+<div
+  style="
+    position: fixed;
+    inset: 0;
+    background: url('https://image-static.collegedunia.com/public/college_data/images/campusimage/16280628401.jpg')
+                center / cover no-repeat;
+    z-index: -2;
+  "
+></div>
+
+<!-- Dark overlay for readability -->
+<div
+  style="
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: -1;
+  "
+></div>
+
+<!-- Hero content -->
+<div class="simple-hero" style="min-height: 90vh; color: white;">
+
+  <h1 class="animate-fade-in-up" style="--delay: 0.1s;">
+    Welcome to <span class="text-primary">QuickPrint</span>
+  </h1>
+
+  <p class="lead my-3 animate-fade-in-up"
+     style="--delay: 0.3s; max-width: 600px;">
+    Fast, easy, and reliable printing for students.
+  </p>
+
+  <div class="d-flex gap-3 mt-4 animate-fade-in-up" style="--delay: 0.5s;">
+    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4">
+      Student Login
+    </a>
+    <a href="{{ url_for('staff_login') }}" class="btn btn-dark btn-lg px-4">
+      Staff Login
+    </a>
+  </div>
+
+</div>
+
+{% endblock %}

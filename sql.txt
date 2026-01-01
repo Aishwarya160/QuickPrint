@@ -1,0 +1,293 @@
+CREATE DATABASE quickprint_db;
+
+USE quickprint_db;
+
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usn VARCHAR(20) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    role VARCHAR(10) DEFAULT 'student'
+);
+
+CREATE TABLE print_request (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    filename VARCHAR(200) NOT NULL,
+    status VARCHAR(20) DEFAULT 'Pending',
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+
+ALTER TABLE print_request
+ADD COLUMN paper_size VARCHAR(20),
+ADD COLUMN orientation VARCHAR(20),
+ADD COLUMN color_mode VARCHAR(20),
+ADD COLUMN print_quality VARCHAR(20),
+ADD COLUMN finishing VARCHAR(50);
+
+new:
+ALTER TABLE print_request
+ADD COLUMN priority VARCHAR(10) NOT NULL DEFAULT 'Medium';
+
+DESCRIBE print_request;
+
+ALTER TABLE print_request
+ADD COLUMN visible_to_staff BOOLEAN DEFAULT TRUE;
+
+new:
+ALTER TABLE print_request ADD COLUMN pages INT NOT NULL DEFAULT 1;
+ALTER TABLE print_request ADD COLUMN copies INT NOT NULL DEFAULT 1;
+
+ALTER TABLE print_request ADD COLUMN sidedness VARCHAR(20);
+ALTER TABLE print_request ADD COLUMN pages_per_sheet VARCHAR(10);
+
+
+23-10-25
+USE quickprint_db;
+ALTER TABLE print_request MODIFY COLUMN pages VARCHAR(100);  
+
+new:
+USE quickprint_db;
+
+INSERT INTO user (usn, password, role) VALUES
+('4GW23CI001', 'aiml', 'student'),
+('4GW23CI002', 'aiml', 'student'),
+('4GW23CI003', 'aiml', 'student'),
+('4GW23CI004', 'aiml', 'student'),
+('4GW23CI005', 'aiml', 'student'),
+('4GW23CI006', 'aiml', 'student'),
+('4GW23CI007', 'aiml', 'student'),
+('4GW23CI008', 'aiml', 'student'),
+('4GW23CI009', 'aiml', 'student'),
+('4GW23CI010', 'aiml', 'student'),
+('4GW23CI011', 'aiml', 'student'),
+('4GW23CI012', 'aiml', 'student'),
+('4GW23CI013', 'aiml', 'student'),
+('4GW23CI014', 'aiml', 'student'),
+('4GW23CI015', 'aiml', 'student'),
+('4GW23CI016', 'aiml', 'student'),
+('4GW23CI017', 'aiml', 'student'),
+('4GW23CI018', 'aiml', 'student'),
+('4GW23CI019', 'aiml', 'student'),
+('4GW23CI020', 'aiml', 'student'),
+('4GW23CI021', 'aiml', 'student'),
+('4GW23CI022', 'aiml', 'student'),
+('4GW23CI023', 'aiml', 'student'),
+('4GW23CI024', 'aiml', 'student'),
+('4GW23CI025', 'aiml', 'student'),
+('4GW23CI026', 'aiml', 'student'),
+('4GW23CI027', 'aiml', 'student'),
+('4GW23CI028', 'aiml', 'student'),
+('4GW23CI029', 'aiml', 'student'),
+('4GW23CI030', 'aiml', 'student'),
+('4GW23CI031', 'aiml', 'student'),
+('4GW23CI032', 'aiml', 'student'),
+('4GW23CI033', 'aiml', 'student'),
+('4GW23CI034', 'aiml', 'student'),
+('4GW23CI035', 'aiml', 'student'),
+('4GW23CI036', 'aiml', 'student'),
+('4GW23CI037', 'aiml', 'student'),
+('4GW23CI038', 'aiml', 'student'),
+('4GW23CI039', 'aiml', 'student'),
+('4GW23CI040', 'aiml', 'student'),
+('4GW23CI041', 'aiml', 'student'),
+('4GW23CI042', 'aiml', 'student'),
+('4GW23CI043', 'aiml', 'student'),
+('4GW23CI044', 'aiml', 'student'),
+('4GW23CI045', 'aiml', 'student'),
+('4GW23CI046', 'aiml', 'student'),
+('4GW23CI047', 'aiml', 'student'),
+('4GW23CI048', 'aiml', 'student'),
+('4GW23CI049', 'aiml', 'student'),
+('4GW23CI050', 'aiml', 'student'),
+('4GW23CI051', 'aiml', 'student'),
+('4GW23CI052', 'aiml', 'student'),
+('4GW23CI053', 'aiml', 'student'),
+('4GW23CI054', 'aiml', 'student'),
+('4GW23CI055', 'aiml', 'student'),
+('4GW23CI056', 'aiml', 'student'),
+('4GW23CI057', 'aiml', 'student'),
+('4GW23CI058', 'aiml', 'student'),
+('4GW23CI059', 'aiml', 'student'),
+('4GW23CI060', 'aiml', 'student'),
+('4GW23CI061', 'aiml', 'student'),
+('4GW24CI400', 'aiml', 'student'),
+('4GW24CI401', 'aiml', 'student'),
+('4GW24CI402', 'aiml', 'student'),
+('4GW24CI403', 'aiml', 'student'),
+('4GW24CI404', 'aiml', 'student'),
+('4GW24CI405', 'aiml', 'student');
+
+
+
+qr code:
+ALTER TABLE print_request
+ADD COLUMN payment_proof VARCHAR(255);
+
+ALTER TABLE print_request
+ADD COLUMN payment_status VARCHAR(32) NOT NULL DEFAULT 'pending';
+
+date:
+ALTER TABLE print_request
+ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+(2nd year)
+INSERT INTO user (usn, password, role) VALUES
+('4GW24CI001','aiml','student'),
+('4GW24CI002','aiml','student'),
+('4GW24CI003','aiml','student'),
+('4GW24CI004','aiml','student'),
+('4GW24CI005','aiml','student'),
+('4GW24CI006','aiml','student'),
+('4GW24CI007','aiml','student'),
+('4GW24CI008','aiml','student'),
+('4GW24CI009','aiml','student'),
+('4GW24CI010','aiml','student'),
+('4GW24CI011','aiml','student'),
+('4GW24CI012','aiml','student'),
+('4GW24CI013','aiml','student'),
+('4GW24CI014','aiml','student'),
+('4GW24CI015','aiml','student'),
+('4GW24CI016','aiml','student'),
+('4GW24CI017','aiml','student'),
+('4GW24CI018','aiml','student'),
+('4GW24CI019','aiml','student'),
+('4GW24CI020','aiml','student'),
+('4GW24CI021','aiml','student'),
+('4GW24CI022','aiml','student'),
+('4GW24CI023','aiml','student'),
+('4GW24CI024','aiml','student'),
+('4GW24CI025','aiml','student'),
+('4GW24CI026','aiml','student'),
+('4GW24CI027','aiml','student'),
+('4GW24CI028','aiml','student'),
+('4GW24CI029','aiml','student'),
+('4GW24CI030','aiml','student'),
+('4GW24CI031','aiml','student'),
+('4GW24CI032','aiml','student'),
+('4GW24CI033','aiml','student'),
+('4GW24CI034','aiml','student'),
+('4GW24CI035','aiml','student'),
+('4GW24CI036','aiml','student'),
+('4GW24CI037','aiml','student'),
+('4GW24CI038','aiml','student'),
+('4GW24CI039','aiml','student'),
+('4GW24CI040','aiml','student'),
+('4GW24CI041','aiml','student'),
+('4GW24CI042','aiml','student'),
+('4GW24CI043','aiml','student'),
+('4GW24CI044','aiml','student'),
+('4GW24CI045','aiml','student'),
+('4GW24CI046','aiml','student'),
+('4GW24CI047','aiml','student'),
+('4GW24CI048','aiml','student'),
+('4GW24CI049','aiml','student'),
+('4GW24CI050','aiml','student'),
+('4GW24CI051','aiml','student'),
+('4GW24CI052','aiml','student'),
+('4GW24CI053','aiml','student'),
+('4GW24CI054','aiml','student'),
+('4GW24CI055','aiml','student'),
+('4GW24CI056','aiml','student'),
+('4GW24CI057','aiml','student'),
+('4GW24CI058','aiml','student'),
+('4GW24CI059','aiml','student'),
+('4GW24CI060','aiml','student'),
+('4GW24CI061','aiml','student'),
+('4GW24CI062','aiml','student'),
+('4GW24CI063','aiml','student'),
+('4GW24CI064','aiml','student'),
+('4GW24CI065','aiml','student'),
+('4GW24CI066','aiml','student'),
+('4GW24CI067','aiml','student'),
+('4GW24CI068','aiml','student'),
+('4GW24CI069','aiml','student'),
+('4GW25CI400','aiml','student'),
+('4GW25CI401','aiml','student'),
+('4GW25CI402','aiml','student'),
+('4GW25CI403','aiml','student'),
+('4GW25CI404','aiml','student'),
+('4GW25CI405','aiml','student'),
+('4GW25CI406','aiml','student');
+
+(1ST YEAR)
+INSERT INTO user (usn, password, role) VALUES
+('4GW25CI001','aiml','student'),
+('4GW25CI002','aiml','student'),
+('4GW25CI003','aiml','student'),
+('4GW25CI004','aiml','student'),
+('4GW25CI005','aiml','student'),
+('4GW25CI006','aiml','student'),
+('4GW25CI007','aiml','student'),
+('4GW25CI008','aiml','student'),
+('4GW25CI009','aiml','student'),
+('4GW25CI010','aiml','student'),
+('4GW25CI011','aiml','student'),
+('4GW25CI012','aiml','student'),
+('4GW25CI013','aiml','student'),
+('4GW25CI014','aiml','student'),
+('4GW25CI015','aiml','student'),
+('4GW25CI016','aiml','student'),
+('4GW25CI017','aiml','student'),
+('4GW25CI018','aiml','student'),
+('4GW25CI019','aiml','student'),
+('4GW25CI020','aiml','student'),
+('4GW25CI021','aiml','student'),
+('4GW25CI022','aiml','student'),
+('4GW25CI023','aiml','student'),
+('4GW25CI024','aiml','student'),
+('4GW25CI025','aiml','student'),
+('4GW25CI026','aiml','student'),
+('4GW25CI027','aiml','student'),
+('4GW25CI028','aiml','student'),
+('4GW25CI029','aiml','student'),
+('4GW25CI030','aiml','student'),
+('4GW25CI031','aiml','student'),
+('4GW25CI032','aiml','student'),
+('4GW25CI033','aiml','student'),
+('4GW25CI034','aiml','student'),
+('4GW25CI035','aiml','student'),
+('4GW25CI036','aiml','student'),
+('4GW25CI037','aiml','student'),
+('4GW25CI038','aiml','student'),
+('4GW25CI039','aiml','student'),
+('4GW25CI040','aiml','student'),
+('4GW25CI041','aiml','student'),
+('4GW25CI042','aiml','student'),
+('4GW25CI043','aiml','student'),
+('4GW25CI044','aiml','student'),
+('4GW25CI045','aiml','student'),
+('4GW25CI046','aiml','student'),
+('4GW25CI047','aiml','student'),
+('4GW25CI048','aiml','student'),
+('4GW25CI049','aiml','student'),
+('4GW25CI050','aiml','student'),
+('4GW25CI051','aiml','student'),
+('4GW25CI052','aiml','student'),
+('4GW25CI053','aiml','student'),
+('4GW25CI054','aiml','student'),
+('4GW25CI055','aiml','student'),
+('4GW25CI056','aiml','student'),
+('4GW25CI057','aiml','student'),
+('4GW25CI058','aiml','student'),
+('4GW25CI059','aiml','student'),
+('4GW25CI060','aiml','student'),
+('4GW25CI061','aiml','student'),
+('4GW25CI062','aiml','student'),
+('4GW25CI063','aiml','student'),
+('4GW25CI064','aiml','student'),
+('4GW25CI065','aiml','student'),
+('4GW25CI066','aiml','student'),
+('4GW25CI067','aiml','student'),
+('4GW25CI068','aiml','student'),
+('4GW25CI069','aiml','student'),
+('4GW26CI400','aiml','student'),
+('4GW26CI401','aiml','student'),
+('4GW26CI402','aiml','student'),
+('4GW26CI403','aiml','student'),
+('4GW26CI404','aiml','student'),
+('4GW26CI405','aiml','student'),
+('4GW26CI406','aiml','student');
+
+

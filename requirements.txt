@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+PyMySQL
+Werkzeug
+PyPDF2
+gunicorn
