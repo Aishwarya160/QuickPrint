@@ -399,9 +399,7 @@ def upload_payment_proof(req_id):
     upi_link = f"upi://pay?pa={UPI_ID}&pn={UPI_NAME}&am={req.cost}&cu=INR&tn=QuickPrint%20Order%20{req.id}"
 
     return render_template("upload_payment_proof.html", req=req, upi_link=upi_link)
-
-with app.app_context():
-    db.create_all()
+    
 
 
 
