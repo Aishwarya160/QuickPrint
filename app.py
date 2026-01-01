@@ -400,6 +400,10 @@ def upload_payment_proof(req_id):
 
     return render_template("upload_payment_proof.html", req=req, upi_link=upi_link)
 
+with app.app_context():
+    db.create_all()
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
