@@ -139,11 +139,7 @@ def parse_pages_input(pages_input, file_path=None):
 
 # ------------ ROUTES ------------
 
-@app.errorhandler(BadRequest)
-def handle_bad_request(e):
-    print("🔥 BAD REQUEST TRACEBACK 🔥")
-    traceback.print_exc()
-    return "Bad Request – check Render logs", 400
+
 
 @app.route("/")
 def home():
@@ -473,7 +469,11 @@ def upload_payment_proof(req_id):
 
     return render_template("upload_payment_proof.html", req=req, upi_link=upi_link)
     
-
+@app.errorhandler(BadRequest)
+def handle_bad_request(e):
+    print("🔥 BAD REQUEST TRACEBACK 🔥")
+    traceback.print_exc()
+    return "Bad Request – check server logs", 400
 
 
 
