@@ -18,6 +18,11 @@ def utc_to_ist(dt):
 
 
 app = Flask(__name__)
+app.config.update(
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=True
+)
+
 app.secret_key = "secret123"
 
 
@@ -149,8 +154,9 @@ def uploaded_file(filename):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        usn = request.form["usn"]
-        password = request.form["password"]
+        usn = request.form["user_id"].strip().upper()
+        password = request.form["password"].strip()
+
         user = User.query.filter_by(usn=usn, role='student').first()
         if user and user.password == password:
             session["user_id"] = user.id
@@ -164,8 +170,8 @@ def login():
 @app.route("/staff_login", methods=["GET", "POST"])
 def staff_login():
     if request.method == "POST":
-        user_id = request.form["user_id"]
-        password = request.form["password"]
+        user_id = request.form["user_id"].strip().upper()
+        password = request.form["password"].strip()
 
         if user_id == "staff1" and password == "aiml":
             session["user_id"] = 1
