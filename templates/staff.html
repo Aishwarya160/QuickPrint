@@ -42,7 +42,8 @@
                     </span>
                     <br>
                     <small class="text-muted">
-                        {{ req.created_at.strftime('%I:%M %p') }}
+                       {{ r.ist_created_at.strftime("%d-%m-%Y %I:%M %p") if r.ist_created_at else "-" }}
+
                     </small>
                 {% else %}
                     -

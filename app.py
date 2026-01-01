@@ -7,7 +7,15 @@ from flask import send_from_directory
 from PyPDF2 import PdfReader
 from flask import abort
 from datetime import datetime
-os.environ['TZ'] = 'Asia/Kolkata'
+from datetime import timedelta
+
+
+def utc_to_ist(dt):
+    if dt is None:
+        return None
+    return dt + timedelta(hours=5, minutes=30)
+
+
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -285,22 +293,29 @@ def staff_panel():
         .all()
     )
 
-    today = datetime.now().date()
+    # 🔹 Current IST date
+    ist_now = utc_to_ist(datetime.utcnow())
+    today = ist_now.date()
     yesterday = today - timedelta(days=1)
 
     for r in requests:
         if r.created_at:
-            d = r.created_at.date()
+            # 🔹 Convert created_at to IST
+            r.ist_created_at = utc_to_ist(r.created_at)
+
+            d = r.ist_created_at.date()
             if d == today:
                 r.date_label = "Today"
             elif d == yesterday:
                 r.date_label = "Yesterday"
             else:
-                r.date_label = r.created_at.strftime("%d-%m-%Y")
+                r.date_label = r.ist_created_at.strftime("%d-%m-%Y")
         else:
             r.date_label = "-"
+            r.ist_created_at = None
 
     return render_template("staff.html", requests=requests)
+
 
 
 
