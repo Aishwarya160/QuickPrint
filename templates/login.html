@@ -1,12 +1,56 @@
 {% extends "base.html" %}
+
 {% block content %}
 
+<!-- Main background (same pop & color as before) -->
+<div
+  style="
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #e9f2ff 0%,
+      #f6f9ff 45%,
+      #ffffff 100%
+    );
+    z-index: -3;
+  "
+></div>
+
+<!-- Subtle blue glow (same as before) -->
+<div
+  style="
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(13,110,253,0.18),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at bottom left,
+        rgba(13,110,253,0.12),
+        transparent 60%
+      );
+    z-index: -2;
+  "
+></div>
+
+<!-- Login card -->
 <div class="d-flex justify-content-center align-items-center" style="min-height:80vh;">
-  <div class="glass-card" style="max-width:420px;width:100%;">
+  <div class="glass-card animate-fade-in-up"
+       style="
+         max-width:420px;
+         width:100%;
+         box-shadow: 0 25px 50px rgba(13,110,253,0.18);
+       ">
 
     <h3 class="text-center mb-4">Student Login</h3>
 
-    <form method="POST" action="{{ url_for('login') }}" enctype="application/x-www-form-urlencoded">
+    <form method="POST"
+          action="{{ url_for('login') }}"
+          enctype="application/x-www-form-urlencoded">
 
       <div class="mb-3">
         <label class="form-label">USN</label>
@@ -28,7 +72,9 @@
                autocomplete="off">
       </div>
 
-      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <button type="submit" class="btn btn-primary w-100">
+        Login
+      </button>
     </form>
 
   </div>
