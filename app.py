@@ -6,11 +6,11 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PyPDF2 import PdfReader
 from flask import abort
+import traceback
 from werkzeug.exceptions import BadRequest 
 from datetime import datetime
 from datetime import timedelta
 
-from werkzeug.exceptions import traceback
 
 def utc_to_ist(dt):
     if dt is None:
