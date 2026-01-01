@@ -6,11 +6,12 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PyPDF2 import PdfReader
 from flask import abort
-
+from datetime import datetime
+os.environ['TZ'] = 'Asia/Kolkata'
 
 app = Flask(__name__)
 app.secret_key = "secret123"
-import os
+
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
