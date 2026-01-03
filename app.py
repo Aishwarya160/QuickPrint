@@ -176,7 +176,8 @@ def normalize_input(val):
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+     session.clear()   # 🔴 ADD THIS LINE
+     if request.method == "POST":
         # 🔹 SAFE reads (NEVER cause 400)
         usn = normalize_input(request.form.get("user_id", ""))
         password = request.form.get("password", "").strip()
@@ -196,7 +197,7 @@ def login():
 
         flash("Invalid credentials")
 
-    return render_template("login.html")
+     return render_template("login.html")
 
 
 import re
@@ -209,6 +210,7 @@ def normalize_input(value):
 
 @app.route("/staff_login", methods=["GET", "POST"])
 def staff_login():
+    session.clear()
     if request.method == "POST":
         user_id = normalize_input(request.form.get("user_id", ""))
         password = request.form.get("password", "").strip()

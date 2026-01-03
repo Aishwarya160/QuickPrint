@@ -290,4 +290,12 @@ INSERT INTO user (usn, password, role) VALUES
 ('4GW26CI405','aiml','student'),
 ('4GW26CI406','aiml','student');
 
+for pushing db to cloud db(aiven)
+mysqldump -u root -p quickprint_db user > users.sql
 
+dir users.sql
+
+mysql+pymysql://avnadmin:AVNS_2pozsY4-EslxicbF6B-@mysql-1f0c216e-aishwaryas101605-cf28.l.aivencloud.com:21450/defaultdb
+(enter the aiven db password)
+
+SOURCE C:/Users/Aishwarya S/users.sql;
